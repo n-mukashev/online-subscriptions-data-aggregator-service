@@ -1,0 +1,10 @@
+POST http://localhost:8080/subscription
+Content-Type: application/json
+
+{
+    "ServiceName" : "Netflix Pro",
+    "monthly_price" : 1000,
+    "user_id" : "8d0a6e74-2c2e-4a44-9b40-6484f3c1a2b7",
+    "start_date" : "01-2025",
+    "end_date" : "01-2026"
+}

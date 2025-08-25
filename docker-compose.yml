@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: subscriptions_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: online_subscriptions_data_aggregator
+    ports:
+      - "5432:5432"
+    restart: always
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: subscriptions_app
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: online_subscriptions_data_aggregator
+      CONFIG_PATH: /app/config/prod.yaml
+      ENV: prod
+    ports:
+      - "8080:8080"
+    command: ["./subscriptions-app"]
+    restart: always
+    depends_on:
+      - db

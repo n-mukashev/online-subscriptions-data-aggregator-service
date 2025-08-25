@@ -1,0 +1,10 @@
+PUT http://localhost:8080/following
+Content-Type: application/json
+
+{
+    "id" : 3,
+    "service_name" : "Spotify Light",
+    "monthly_price" : 200,
+    "user_id" : "8d0a6e74-2c2e-4a44-9b40-6484f3c1a2b7",
+    "start_date" : "01-2025"
+}

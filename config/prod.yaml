@@ -1,0 +1,7 @@
+env: "prod"
+server:
+  url: "0.0.0.0:8080"
+db:
+  host: "db"
+  port: "5432"
+  name: "online_subscriptions_data_aggregator"

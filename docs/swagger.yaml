@@ -1,0 +1,316 @@
+basePath: /
+definitions:
+  models.Subscription:
+    description: A subscription that a user has to a service
+    properties:
+      end_date:
+        description: |-
+          End date of the subscription
+          example: "06-2006"
+        type: string
+      id:
+        description: |-
+          ID of the subscription
+          example: 1
+        type: integer
+      monthly_price:
+        description: |-
+          Monthly price of the subscription
+          example: 100
+        type: integer
+      service_name:
+        description: |-
+          Name of the service
+          example: "Netflix"
+        type: string
+      start_date:
+        description: |-
+          Start date of the subscription
+          example: "06-2006"
+        type: string
+      user_id:
+        description: |-
+          ID of the user who owns the subscription
+          example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        type: string
+    required:
+    - monthly_price
+    - service_name
+    - start_date
+    - user_id
+    type: object
+  models.SubscriptionInvoiceRequest:
+    properties:
+      from_date:
+        description: |-
+          Start date of the period (month/year)
+          example: "06-2006"
+        type: string
+      service_name:
+        description: |-
+          Service name
+          example: "Netflix"
+        type: string
+      to_date:
+        description: |-
+          End date of the period (month/year). Can be null, in which case the current date is used
+          example: "06-2006"
+        type: string
+      user_id:
+        description: |-
+          Unique user identifier
+          example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        type: string
+    required:
+    - from_date
+    - service_name
+    - to_date
+    - user_id
+    type: object
+  models.UpdateSubscription:
+    description: Fields for updating an existing subscription
+    properties:
+      end_date:
+        description: |-
+          End date of the subscription
+          example: "06-2006"
+        type: string
+      id:
+        description: |-
+          ID of the subscription to update
+          example: 1
+        type: integer
+      monthly_price:
+        description: |-
+          Monthly price of the subscription
+          example: 100
+        type: integer
+      service_name:
+        description: |-
+          Name of the service
+          example: "Netflix"
+        type: string
+      start_date:
+        description: |-
+          Start date of the subscription
+          example: "06-2006"
+        type: string
+      user_id:
+        description: |-
+          ID of the user
+          example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        type: string
+    required:
+    - id
+    type: object
+info:
+  contact: {}
+  description: API documentation for Users Online Subscriptions Data Aggregator
+  title: Users Online Subscriptions Data Aggregator API
+  version: "1.0"
+paths:
+  /subscription:
+    post:
+      consumes:
+      - application/json
+      description: Create a new subscription entry
+      parameters:
+      - description: Subscription data
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/models.Subscription'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create new subscription
+      tags:
+      - Subscription
+    put:
+      consumes:
+      - application/json
+      description: Update an existing subscription by ID
+      parameters:
+      - description: Subscription data
+        in: body
+        name: subscription
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateSubscription'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Update subscription
+      tags:
+      - Subscription
+  /subscription/{id}:
+    delete:
+      description: Delete a subscription by its ID
+      parameters:
+      - description: Subscription ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Delete subscription
+      tags:
+      - Subscription
+    get:
+      description: Get a single subscription by its ID
+      parameters:
+      - description: Subscription ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Subscription'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get subscription by ID
+      tags:
+      - Subscription
+  /subscription/all:
+    get:
+      description: Get a list of all subscriptions
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Subscription'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get all subscriptions
+      tags:
+      - Subscription
+  /subscription/invoice:
+    post:
+      consumes:
+      - application/json
+      description: Calculate the total cost of subscriptions for a given user and
+        period
+      parameters:
+      - description: Invoice Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.SubscriptionInvoiceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              format: int32
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get subscriptions invoice
+      tags:
+      - Subscription
+swagger: "2.0"

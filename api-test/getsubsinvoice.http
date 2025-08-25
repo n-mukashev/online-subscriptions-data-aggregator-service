@@ -1,0 +1,9 @@
+POST http://localhost:8080/subscription/invoice
+Content-Type: application/json
+
+{
+    "service_name" : "FCB Basic",
+    "user_id" : "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "from_date" : "01-2025",
+    "to_date": "12-2025"
+}

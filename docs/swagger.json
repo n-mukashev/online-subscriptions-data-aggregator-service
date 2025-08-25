@@ -1,0 +1,417 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API documentation for Users Online Subscriptions Data Aggregator",
+        "title": "Users Online Subscriptions Data Aggregator API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/subscription": {
+            "put": {
+                "description": "Update an existing subscription by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Update subscription",
+                "parameters": [
+                    {
+                        "description": "Subscription data",
+                        "name": "subscription",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UpdateSubscription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new subscription entry",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Create new subscription",
+                "parameters": [
+                    {
+                        "description": "Subscription data",
+                        "name": "subscription",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Subscription"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription/all": {
+            "get": {
+                "description": "Get a list of all subscriptions",
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Get all subscriptions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Subscription"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription/invoice": {
+            "post": {
+                "description": "Calculate the total cost of subscriptions for a given user and period",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Get subscriptions invoice",
+                "parameters": [
+                    {
+                        "description": "Invoice Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.SubscriptionInvoiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "integer",
+                                "format": "int32"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription/{id}": {
+            "get": {
+                "description": "Get a single subscription by its ID",
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Get subscription by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Subscription ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Subscription"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a subscription by its ID",
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Delete subscription",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Subscription ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Subscription": {
+            "description": "A subscription that a user has to a service",
+            "type": "object",
+            "required": [
+                "monthly_price",
+                "service_name",
+                "start_date",
+                "user_id"
+            ],
+            "properties": {
+                "end_date": {
+                    "description": "End date of the subscription\nexample: \"06-2006\"",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the subscription\nexample: 1",
+                    "type": "integer"
+                },
+                "monthly_price": {
+                    "description": "Monthly price of the subscription\nexample: 100",
+                    "type": "integer"
+                },
+                "service_name": {
+                    "description": "Name of the service\nexample: \"Netflix\"",
+                    "type": "string"
+                },
+                "start_date": {
+                    "description": "Start date of the subscription\nexample: \"06-2006\"",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "ID of the user who owns the subscription\nexample: \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"",
+                    "type": "string"
+                }
+            }
+        },
+        "models.SubscriptionInvoiceRequest": {
+            "type": "object",
+            "required": [
+                "from_date",
+                "service_name",
+                "to_date",
+                "user_id"
+            ],
+            "properties": {
+                "from_date": {
+                    "description": "Start date of the period (month/year)\nexample: \"06-2006\"",
+                    "type": "string"
+                },
+                "service_name": {
+                    "description": "Service name\nexample: \"Netflix\"",
+                    "type": "string"
+                },
+                "to_date": {
+                    "description": "End date of the period (month/year). Can be null, in which case the current date is used\nexample: \"06-2006\"",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "Unique user identifier\nexample: \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"",
+                    "type": "string"
+                }
+            }
+        },
+        "models.UpdateSubscription": {
+            "description": "Fields for updating an existing subscription",
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "end_date": {
+                    "description": "End date of the subscription\nexample: \"06-2006\"",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID of the subscription to update\nexample: 1",
+                    "type": "integer"
+                },
+                "monthly_price": {
+                    "description": "Monthly price of the subscription\nexample: 100",
+                    "type": "integer"
+                },
+                "service_name": {
+                    "description": "Name of the service\nexample: \"Netflix\"",
+                    "type": "string"
+                },
+                "start_date": {
+                    "description": "Start date of the subscription\nexample: \"06-2006\"",
+                    "type": "string"
+                },
+                "user_id": {
+                    "description": "ID of the user\nexample: \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
